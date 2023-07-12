@@ -8,4 +8,8 @@ class EventSerializer < ActiveModel::Serializer
     }
   end
 
+  def attendees
+    object.attendees.map { |attendee| attendee.name }
+  end
+
 end
