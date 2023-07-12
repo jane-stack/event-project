@@ -4,7 +4,9 @@ class User < ApplicationRecord
     has_many :attendances
     has_many :attended_events, through: :attendances, source: :event
 
-    validates :username, uniqueness: true, presence: true
+
+    validates :name, presence: true
+    validates :email, uniqueness: true, presence: true
     validates :password, length: { minimum: 8 }
 
     validate :password_lower_case
