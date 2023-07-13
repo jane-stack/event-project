@@ -17,7 +17,7 @@ function LoginPage() {
             ):(
                 <>
                 <SignupForm />
-                <p className='words'>Log in to your Student Account &nbsp;
+                <p className='words'>Log in to your Account &nbsp;
                     <button onClick={() => setShowLogin(true)}>Login</button>
                 </p>
                 </>

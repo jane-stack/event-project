@@ -1,6 +1,48 @@
+import { useContext, useEffect, useState } from "react";
+import { ErrorContext } from "../context/ErrorContext";
+import { UserContext } from "../context/UserContext";
 import Errors from "../errors/Errors";
+import { useHistory } from "react-router-dom";
 
 function SignupForm() {
+    const { setErrors } = useContext(ErrorContext);
+    const { addUser, loginUser, loggedIn } = useContext(UserContext);
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useHistory();
+
+    useEffect(() => {
+        if (loggedIn) {
+            navigate.push('/main')
+        } else {
+            return (
+                setErrors([])
+            )
+        }
+    }, [loggedIn, navigate, setErrors])
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        fetch('/signup', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({name, email, password})
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            if (data.errors) {
+                setErrors(data.errors);
+                setName("");
+                setEmail("")
+                setPassword("");
+            } else {
+                addUser(data);
+                loginUser(data);
+                navigate.push('/main')
+            }
+        })
+    }
 
     return (
         <form className="form" onSubmit={handleSubmit}>
@@ -11,6 +53,8 @@ function SignupForm() {
             type="text"
             name="first_name"
             id="first_name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required={true}
             />
             </div>
@@ -20,6 +64,8 @@ function SignupForm() {
             type="text"
             name="email"
             id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required={true}
             />
             </div>
@@ -29,6 +75,8 @@ function SignupForm() {
             type="password"
             name="password"
             id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required={true}
             />
             </div>
