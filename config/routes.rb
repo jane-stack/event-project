@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   
   resources :events do
-    resources :attendances
+    resources :attendances, except: [:index]
   end
-  resources :users
+  resources :users, except: [:update]
+  resources :attendances, only: [:index]
 
   # Users
   post '/signup', to: 'users#create'

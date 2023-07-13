@@ -1,5 +1,5 @@
 class AttendancesController < ApplicationController
-    before_action :set_event
+    before_action :set_event, except: [:index]
     before_action :find_attendance, only: [:update, :destroy]
     skip_before_action :authorize, only: [:index]
     before_action only: [:update, :destroy] do
@@ -7,6 +7,10 @@ class AttendancesController < ApplicationController
     end
 
     def index
+        render json: Attendance.all
+    end
+
+    def show
         @attendance = @event.attendances
         render json: @attendance
     end
