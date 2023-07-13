@@ -43,7 +43,7 @@ class AttendancesController < ApplicationController
     end
 
     def attendance_params
-        params.permit(:user_id, :status).merge(status: 'attending')
+        params.permit(:status).merge(status: 'attending')
     end
 
     def find_attendance
