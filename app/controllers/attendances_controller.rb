@@ -1,8 +1,8 @@
 class AttendancesController < ApplicationController
     before_action :set_event
-    before_action :find_attendance, only: [:destroy]
+    before_action :find_attendance, only: [:update, :destroy]
     skip_before_action :authorize, only: [:index]
-    before_action only: [:destroy] do
+    before_action only: [:update, :destroy] do
         authorize_user_resource(@attendance.user_id)
     end
 
@@ -21,6 +21,12 @@ class AttendancesController < ApplicationController
         end
     end
 
+    def update
+        @attendance = @event.attendances.find(params[:id])
+        @attendance.update(status: 'canceled')
+        render json: @attendance
+    end
+
     def destroy
         @attendance = @event.attendances.find(params[:id])
         @attendance.destroy
@@ -33,7 +39,7 @@ class AttendancesController < ApplicationController
     end
 
     def attendance_params
-        params.permit(:user_id)
+        params.permit(:user_id, :status).merge(status: 'attending')
     end
 
     def find_attendance

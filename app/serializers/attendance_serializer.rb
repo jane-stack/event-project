@@ -1,6 +1,11 @@
 class AttendanceSerializer < ActiveModel::Serializer
-  attributes :id, :user
-  # has_one :user
-  # has_one :event
-  
+  attributes :id, :user, :status
+
+  def user
+    {
+      id: object.user.id,
+      name: object.user.name,
+    }
+  end
+
 end
