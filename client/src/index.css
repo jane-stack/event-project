@@ -86,3 +86,15 @@ td {
   text-align: center;
   width: 200px;
 }
+
+.post-form {
+  padding-top: 50px;
+  text-align: center;
+}
+
+.post-input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}

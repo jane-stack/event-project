@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
+
 function EventCard ({ event }) {
+    
     return (
         <div>
             <tbody>
@@ -8,7 +10,6 @@ function EventCard ({ event }) {
                 <td>{event.location}</td>
                 <td>
                     <button><NavLink to={`/events/${event.id}`}>Detail</NavLink></button> 
-                    <button>Attend</button>
                 </td>
             </tbody>
         </div>
