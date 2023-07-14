@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import EventList from './pages/EventList';
 import EventDetail from './components/EventDetail';
 import NewEventForm from './forms/NewEventForm';
+import EventEditForm from './forms/EventEditForm';
 
 function App() {
   const [attendances, setAttendances] = useState([]);
@@ -25,6 +26,7 @@ function App() {
     <NavBar />
     <div className="App">
       <Switch>
+        <Route path="/events/:id/edit"><EventEditForm /></Route>
         <Route path="/create"><NewEventForm /></Route>
         <Route path="/events/:id"><EventDetail addAttendee={addAttendee} /></Route>
         <Route path="/main">

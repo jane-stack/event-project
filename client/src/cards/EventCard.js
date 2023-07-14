@@ -25,6 +25,7 @@ function EventCard ({ event }) {
                     <button><NavLink to={`/events/${event.id}`}>Detail</NavLink></button>
                     {user && user.name === event.organizer?.name && (
                         <>
+                        <button><NavLink to={`/events/${event.id}/edit`}>Edit</NavLink></button>
                         <button onClick={onDeleteEvent}>Delete</button>
                         </>
                     )} 
