@@ -1,4 +1,5 @@
 body {
+  background-color: #282c34;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -49,7 +50,7 @@ code {
   padding: 20px;
   margin: 0 6px 6px;
   background: none;
-  text-decoration: none;
+  text-decoration: line;
   color: white;
 }
 
@@ -64,4 +65,24 @@ code {
   padding-bottom: 100px;
   background-color: white;
   color: black;
+}
+
+thead {
+  width: 200px;
+  height: 50px;
+}
+
+tbody {
+  width: 200px;
+  height: 50px;
+}
+
+th {
+  border: 1px solid white;
+  width: 200px;
+}
+
+td {
+  text-align: center;
+  width: 200px;
 }

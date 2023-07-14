@@ -3,10 +3,10 @@ import { createContext, useEffect, useState } from "react";
 const UserContext = createContext({});
 const UserProvider = ({children}) => {
     const [user, setUser] = useState([]);
-    const [loggedIn, setLoggedIn] = useState([]);
+    const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
-        fetch('/me')
+        fetch(`/me`)
         .then(resp => {
             if (resp.ok) {
                 resp.json().then(data => {
@@ -18,7 +18,7 @@ const UserProvider = ({children}) => {
     }, [])
 
     const loginUser = (user) => {
-        setUser(user)
+        setUser(user);
         setLoggedIn(true);
     }
 
@@ -28,7 +28,7 @@ const UserProvider = ({children}) => {
     }
 
     const addUser = (user) => {
-        setUser(user)
+        setUser(user);
         setLoggedIn(true);
     }
 

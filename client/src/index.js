@@ -5,13 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ErrorProvider } from './context/ErrorContext';
 import { UserProvider } from './context/UserContext';
+import { EventProvider } from './context/EventContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ErrorProvider>
       <UserProvider>
-        <App />
+        <EventProvider>
+          <App />
+        </EventProvider>
       </UserProvider>
     </ErrorProvider>
   </React.StrictMode>
