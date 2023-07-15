@@ -21,9 +21,9 @@ function NavBar() {
         return (
             <>
             <div><h4>You are Logged in as {user.name}</h4></div>
-            <NavLink to="/main" className="nav-link">My Events</NavLink>
-            <NavLink to="/events" className="nav-link">All Events</NavLink>
-            <NavLink to="/create" className="nav-link">Create Event</NavLink>
+            <NavLink to="/main" className="nav-link">Schedule</NavLink>
+            <NavLink to="/events" className="nav-link">Events</NavLink>
+            <NavLink to="/create" className="nav-link">Create</NavLink>
             <NavLink to="#" className="nav-link" onClick={logoutButton}>Logout</NavLink>
             </>
         )
