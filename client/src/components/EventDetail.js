@@ -53,6 +53,7 @@ function EventDetail () {
         })
         .then(resp => resp.json())
         .then(deleteEvent(event.id))
+        navigate.push('/events')
     }
 
     const renderAttendees = event.attendances.map(attendee => {
