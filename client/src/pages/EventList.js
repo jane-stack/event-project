@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import EventCard from "../cards/EventCard";
-import Errors from "../errors/Errors";
 import { EventContext } from "../context/EventContext";
 
 function EventList () {
@@ -17,17 +16,18 @@ function EventList () {
 
     return (
         <div>
-            <h3>LIST OF EVENTS</h3>
-            <thead>
-                <tr>
-                    <th>Event Name</th>
-                    <th>Event Date</th>
-                    <th>Event Location</th>
-                    <th></th>
-                </tr>
-            </thead>
+            <h3>List of Active Events</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Event Date</th>
+                        <th>Event Location</th>
+                        <th></th>
+                    </tr>
+                </thead>
             {renderEvents}
-            <Errors />
+        </table>
         </div>
     )
 }

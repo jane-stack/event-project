@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 function EventCard ({ event }) {
     
     return (
-        <div>
             <tbody>
                 <tr>
                     <td>{event.name}</td>
@@ -14,7 +13,6 @@ function EventCard ({ event }) {
                     </td>
                 </tr>
             </tbody>
-        </div>
     )
 }
 

@@ -2,15 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { EventContext } from "../context/EventContext";
-import { ErrorContext } from "../context/ErrorContext";
-import Errors from "../errors/Errors";
 import { useParams } from "react-router-dom";
 import AttendeeCard from "../cards/AttendeeCard";
+import { ErrorContext } from "../context/ErrorContext";
 
 function EventDetail () {
+    const { setErrors } = useContext(ErrorContext);
     const { user } = useContext(UserContext);
     const { events, deleteEvent } = useContext(EventContext);
-    const { setErrors } = useContext(ErrorContext);
     const id = parseInt(useParams().id);
     const event = events.find(event => event.id === id);
     const [attendances, setAttendances] = useState([]);
@@ -19,23 +18,25 @@ function EventDetail () {
     useEffect(() => {
         fetch(`/events/${event.id}/attendances`)
         .then(resp => resp.json()).then(data => setAttendances(data))
-        .catch(errors => setErrors(errors))
-    }, [event.id, setErrors])
+        .catch(errors => console.log(errors))
+    }, [event.id])
 
     const addAttendee = (newAttendee) => {
-        setAttendances([...attendances, newAttendee])
-    }
+        setAttendances([...attendances, newAttendee]);
+    };
 
     // button click to attend the event
     const attendButton = () => {
         fetch(`/events/${event.id}/attendances`, {
-            method: "POST",
+            method: "POST"
         })
         .then(resp => resp.json())
-        .then(addAttendee(event.id))
-        navigate.push('/events')
-    }
+        .then(() => addAttendee(event.id))
+        .then(() => navigate.push('/events'))
+        .catch((error) => setErrors(error));
+    };
 
+    // handles deleting an event
     const onDeleteEvent = () => {
         fetch(`/events/${event.id}`, {
             method: "DELETE",
@@ -45,11 +46,33 @@ function EventDetail () {
         navigate.push('/events')
     }
 
-    const renderAttendees = event.attendances.map(attendee => {
+    // handle editing attendees Status
+    const editStatus = (newStatus) => {
+        const updatedStatusList = attendances.map(attendee => {
+            if (newStatus.id === attendee.id) {
+                return newStatus
+            } else {
+                return attendee
+            }
+        })
+        setAttendances(updatedStatusList);
+    }
+
+    // handles deleting attendances
+    const onDeleteAttendee = (id) => {
+        const updatedStatusList = attendances.filter(attendee => attendee.id !== id)
+        setAttendances(updatedStatusList);
+    }
+
+    const renderAttendees = attendances.map(attendee => {
         return (
             <AttendeeCard
                 key={attendee.id}
                 attendee={attendee}
+                event={event}
+                attendances={attendances}
+                editStatus={editStatus}
+                onDeleteAttendee={onDeleteAttendee}
             />
         )
     })
@@ -57,21 +80,19 @@ function EventDetail () {
     return (
         <div>
             <h1>{event.name}</h1>
-            <p>Organizer: {event.organizer.name}</p>
-            <h6>{event.date}</h6>
-            <h6>{event.location}</h6>
+            <p>{event.organizer.name}</p>
+            <p>{event.date}</p>
+            <p>{event.location}</p>
             {user && user.name === event.organizer?.name && (
                 <>
                     <button><NavLink to={`/events/${event.id}/edit`}>Edit Event</NavLink></button>
                     <button onClick={onDeleteEvent}>Cancel Event</button>
                 </>
             )}
-            <button onClick={() => attendButton()}>Attend This Event</button>
-            <Errors />
+            <button onClick={attendButton}>Attend This Event</button>
             <br />
             <br />
             <br />
-            <hr />
             <h3>People Attending:</h3>
             <thead>
                 <tr>

@@ -7,14 +7,12 @@ import EventDetail from './components/EventDetail';
 import NewEventForm from './forms/NewEventForm';
 import EventEditForm from './forms/EventEditForm';
 import MainPage from './pages/MainPage';
-import Errors from './errors/Errors';
 
 function App() {
   
   return (
     <BrowserRouter>
     <NavBar />
-    <Errors />
     <div className="App">
       <Switch>
         <Route path="/events/:id/edit"><EventEditForm /></Route>

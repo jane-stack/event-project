@@ -13,17 +13,16 @@ function NavBar() {
         })
         logoutUser()
     }
-
     navigate.push("/")
+
     
     // if user logged in
     const userIn = () => {
         return (
             <>
             <div><h4>You are Logged in as {user.name}</h4></div>
-            <NavLink to="/main" className="nav-link">Schedule</NavLink>
-            <NavLink to="/events" className="nav-link">Events</NavLink>
-            <NavLink to="/create" className="nav-link">Create</NavLink>
+            <NavLink to="/events" className="nav-link">Find Events</NavLink>
+            <NavLink to="/create" className="nav-link">Create Event</NavLink>
             <NavLink to="#" className="nav-link" onClick={logoutButton}>Logout</NavLink>
             </>
         )

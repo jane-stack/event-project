@@ -5,8 +5,8 @@ import Errors from "../errors/Errors";
 import { useHistory } from "react-router-dom";
 
 function SignupForm() {
-    const { setErrors } = useContext(ErrorContext);
-    const { addUser, loginUser, loggedIn } = useContext(UserContext);
+    const { setErrors, loggedIn } = useContext(ErrorContext);
+    const { addUser, loginUser } = useContext(UserContext);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -14,7 +14,7 @@ function SignupForm() {
 
     useEffect(() => {
         if (loggedIn) {
-            navigate.push('/main')
+            navigate.push('/events')
         } else {
             return (
                 setErrors([])
@@ -39,7 +39,7 @@ function SignupForm() {
             } else {
                 addUser(data);
                 loginUser(data);
-                navigate.push('/main')
+                navigate.push('/events')
             }
         })
     }

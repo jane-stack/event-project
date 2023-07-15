@@ -13,7 +13,7 @@ function LoginForm() {
 
     useEffect(() => {
         if (loggedIn) {
-            navigate.push("/main")
+            navigate.push("/events")
         } else {
             return (
                 setErrors([])
@@ -35,8 +35,7 @@ function LoginForm() {
                 setPassword("");
             } else {
                 loginUser(data);
-                setErrors([]);
-                navigate.push("/main")
+                navigate.push('/events')
             }
         })
     }
