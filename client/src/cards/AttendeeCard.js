@@ -1,9 +1,11 @@
 import { useContext, useState } from "react";
 import { ErrorContext } from "../context/ErrorContext";
 import { useHistory } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 function AttendeeCard ({ attendee, event, editStatus, onDeleteAttendee }) {
     const { setErrors } = useContext(ErrorContext);
+    const { user } = useContext(UserContext);
     const [status, setStatus] = useState(attendee.status);
     const navigate = useHistory();
 
@@ -40,8 +42,12 @@ function AttendeeCard ({ attendee, event, editStatus, onDeleteAttendee }) {
                 <td>{attendee.user.name}</td>
                 <td>{attendee.status}</td>
                 <td>
-                    <button onClick={statusChange} value={status} onChange={(e) => setStatus(e.target.value)}>Status</button>
-                    <button onClick={deleteAttendeeClick}>Not Going</button>
+                    {user && user.name === attendee?.user.name && (
+                        <>
+                        <button onClick={statusChange} value={status} onChange={(e) => setStatus(e.target.value)}>Status</button>
+                        <button onClick={deleteAttendeeClick}>Not Going</button>
+                        </>
+                    )}
                 </td>
                 </tr>
         </tbody>
