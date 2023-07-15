@@ -19,10 +19,12 @@ function EventList () {
         <div>
             <h3>LIST OF EVENTS</h3>
             <thead>
-                <th>Event Name</th>
-                <th>Event Date</th>
-                <th>Event Location</th>
-                <th></th>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Event Date</th>
+                    <th>Event Location</th>
+                    <th></th>
+                </tr>
             </thead>
             {renderEvents}
             <Errors />

@@ -30,21 +30,10 @@ function EventDetail () {
     const attendButton = () => {
         fetch(`/events/${event.id}/attendances`, {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                userId: user
-            }),
         })
         .then(resp => resp.json())
-        .then(data => {
-            if (data.errors) {
-                setErrors(data.errors)
-            } else {
-                addAttendee(data)
-                setErrors([])
-                navigate.push('/main')
-            }
-        })
+        .then(addAttendee(event.id))
+        navigate.push('/events')
     }
 
     const onDeleteEvent = () => {
@@ -77,7 +66,7 @@ function EventDetail () {
                     <button onClick={onDeleteEvent}>Cancel Event</button>
                 </>
             )}
-            <button onClick={attendButton}>Attend This Event</button>
+            <button onClick={() => attendButton()}>Attend This Event</button>
             <Errors />
             <br />
             <br />

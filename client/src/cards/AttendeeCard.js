@@ -14,11 +14,13 @@ function AttendeeCard ({ attendee }) {
     return (
         <div>
             <tbody>
-                <td>{attendee.user.name}</td>
-                <td>{attendee.status}</td>
-                <td>
-                    <button onClick={statusChange}>CLICK</button>
-                </td>
+                <tr>
+                    <td>{attendee.user.name}</td>
+                    <td>{attendee.status}</td>
+                    <td>
+                        <button onClick={statusChange}>CLICK</button>
+                    </td>
+                    </tr>
             </tbody>
         </div>
     )
