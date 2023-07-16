@@ -2,6 +2,7 @@ class AttendancesController < ApplicationController
     before_action :set_event
     before_action :find_attendance, only: [:update, :destroy]
     skip_before_action :authorize, only: [:index]
+    before_action :unprocessable_entity_if_not_found, only: [:update, :destroy]
     before_action only: [:update, :destroy] do
         authorize_user_resource(@attendance.user_id)
     end
@@ -44,5 +45,9 @@ class AttendancesController < ApplicationController
 
     def find_attendance
         @attendance = @event.attendances.find(params[:id])
+    end
+
+    def unprocessable_entity_if_not_found
+        render json: {message: "Attendance not found"}, status: :unprocessable_entity unless @attendance
     end
 end

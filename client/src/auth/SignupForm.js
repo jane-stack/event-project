@@ -33,8 +33,6 @@ function SignupForm() {
         .then(data => {
             if (data.errors) {
                 setErrors(data.errors);
-                setName("");
-                setEmail("")
                 setPassword("");
             } else {
                 addUser(data);

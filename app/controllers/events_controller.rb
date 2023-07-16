@@ -1,6 +1,10 @@
 class EventsController < ApplicationController
     before_action :find_event, only: [:show, :update, :destroy]
     before_action :authorize, only: [:create]
+    before_action :unprocessable_entity_if_not_found, only: [:update, :destroy]
+    before_action only: [:update, :destroy] do
+        authorize_user_resource(@event.organizer_id)
+    end
 
     def index
         @event = Event.all
@@ -41,6 +45,10 @@ class EventsController < ApplicationController
 
     def find_event
         @event = Event.find_by_id(params[:id])
+    end
+
+    def unprocessable_entity_if_not_found
+        render json: {message: "Event not found"}, status: :unprocessable_entity unless @event
     end
 
 end
