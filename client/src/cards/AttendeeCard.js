@@ -1,20 +1,20 @@
 import { useContext, useState } from "react";
 import { ErrorContext } from "../context/ErrorContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 function AttendeeCard ({ attendee, event, editStatus, onDeleteAttendee }) {
     const { setErrors } = useContext(ErrorContext);
     const { user } = useContext(UserContext);
     const [status, setStatus] = useState(attendee.status);
-    const navigate = useHistory();
+    const navigate = useNavigate();
 
     const deleteAttendeeClick = (id) => {
         fetch(`/events/${event.id}/attendances/${attendee.id}`, {
             method: "DELETE"
         })
         .then(() => onDeleteAttendee(id))
-        .then(() => navigate.push('/events'))
+        .then(() => navigate('/events'))
         .catch((error) => setErrors(error));
     };
 

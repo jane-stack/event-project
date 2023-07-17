@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { ErrorContext } from "../context/ErrorContext";
 import { EventContext } from "../context/EventContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Errors from "../errors/Errors";
 
 function NewEventForm () {
@@ -13,7 +13,7 @@ function NewEventForm () {
         location: ""
     }
     const [formData, setFormData] = useState(initialState);
-    const navigate = useHistory();
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -37,9 +37,9 @@ function NewEventForm () {
             } else {
                 addEvent(data)
                 setErrors([])
-                navigate.push('/events')
             }
         })
+        .then(navigate('/events'))
     }
 
     return (

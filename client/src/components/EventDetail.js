@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { EventContext } from "../context/EventContext";
 import { useParams } from "react-router-dom";
@@ -13,7 +13,7 @@ function EventDetail () {
     const id = parseInt(useParams().id);
     const event = events.find(event => event.id === id);
     const [attendances, setAttendances] = useState([]);
-    const navigate = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`/events/${event.id}/attendances`)
@@ -32,7 +32,7 @@ function EventDetail () {
         })
         .then(resp => resp.json())
         .then(() => addAttendee(event.id))
-        .then(() => navigate.push('/events'))
+        .then(() => navigate('/events'))
         .catch((error) => setErrors(error));
     };
 
@@ -43,7 +43,7 @@ function EventDetail () {
         })
         .then(resp => resp.json())
         .then(deleteEvent(event.id))
-        navigate.push('/events')
+        .then(navigate('/events'))
     }
 
     // handle editing attendees Status
@@ -85,7 +85,7 @@ function EventDetail () {
             <p>{event.location}</p>
             {user && user.name === event.organizer?.name && (
                 <>
-                    <button><NavLink to={`/events/${event.id}/edit`}>Edit Event</NavLink></button>
+                    <button><Link to={`/events/${event.id}/edit`}>Edit Event</Link></button>
                     <button onClick={onDeleteEvent}>Cancel Event</button>
                 </>
             )}
@@ -94,14 +94,16 @@ function EventDetail () {
             <br />
             <br />
             <h3>People Attending:</h3>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Change Status</th>
-                </tr>
-            </thead>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Change Status</th>
+                    </tr>
+                </thead>
             {renderAttendees}
+            </table>
         </div>
     )
 }

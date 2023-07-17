@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function EventCard ({ event }) {
     
@@ -9,7 +9,7 @@ function EventCard ({ event }) {
                     <td>{event.date}</td>
                     <td>{event.location}</td>
                     <td>
-                        <button><NavLink to={`/events/${event.id}`}>Detail</NavLink></button>
+                        <button><Link to={`/events/${event.id}`}>Detail</Link></button>
                     </td>
                 </tr>
             </tbody>

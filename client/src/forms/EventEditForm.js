@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import Errors from "../errors/Errors";
 import { ErrorContext } from "../context/ErrorContext";
 import { EventContext } from "../context/EventContext";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function EventEditForm () {
     const { setErrors } = useContext(ErrorContext);
@@ -15,7 +15,7 @@ function EventEditForm () {
         location: event.location
     }
     const [formData, setFormData] = useState(initialState);
-    const navigate = useHistory();
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -39,9 +39,9 @@ function EventEditForm () {
             } else {
                 editEvent(data)
                 setErrors([])
-                navigate.push('/events')
             }
         })
+        .then(navigate('/events'))
     }
 
     return (

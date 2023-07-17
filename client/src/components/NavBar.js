@@ -1,19 +1,17 @@
 import { useContext } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 function NavBar() {
-    const navigate = useHistory();
+    const navigate = useNavigate('/');
     const { user, logoutUser, loggedIn } = useContext(UserContext);
 
     // handles the logout button
     const logoutButton = () => {
-        fetch('/logout', {
-            method: "DELETE"
-        })
-        logoutUser()
+        fetch('/logout', { method: "DELETE" })
+        .then(logoutUser())
+        .then(() => navigate('/'))
     }
-    navigate.push("/")
 
     
     // if user logged in
@@ -21,9 +19,9 @@ function NavBar() {
         return (
             <>
             <div><h4>You are Logged in as {user.name}</h4></div>
-            <NavLink to="/events" className="nav-link">Find Events</NavLink>
-            <NavLink to="/create" className="nav-link">Create Event</NavLink>
-            <NavLink to="#" className="nav-link" onClick={logoutButton}>Logout</NavLink>
+            <Link to="/events" className="nav-link">Find Events</Link>
+            <Link to="/create" className="nav-link">Create Event</Link>
+            <Link to="#" className="nav-link" onClick={logoutButton}>Logout</Link>
             </>
         )
     }
@@ -31,7 +29,7 @@ function NavBar() {
     // if user loggout out
     const userOut = () => {
         <>
-        <h4>Please Log in!</h4>
+        <div><h4>Please Log in!</h4></div>
         </>
     }
 

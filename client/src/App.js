@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import NavBar from './components/NavBar';
 import LoginPage from './pages/LoginPage';
@@ -14,14 +14,14 @@ function App() {
     <BrowserRouter>
     <NavBar />
     <div className="App">
-      <Switch>
-        <Route path="/events/:id/edit"><EventEditForm /></Route>
-        <Route path="/create"><NewEventForm /></Route>
-        <Route path="/events/:id"><EventDetail /></Route>
-        <Route path="/main"><MainPage /></Route>
-        <Route path="/events"><EventList /></Route>
-        <Route path="/"><LoginPage /></Route>
-      </Switch>
+      <Routes>
+        <Route path="/events/:id/edit" element={<EventEditForm />} />
+        <Route path="/create" element={<NewEventForm />} />
+        <Route path="/events/:id" element={<EventDetail />} />
+        <Route path="/main" element={<MainPage />} />
+        <Route path="/events" element={<EventList />} />
+        <Route path="/" element={<LoginPage />} />
+      </Routes>
     </div>
     </BrowserRouter>
   );

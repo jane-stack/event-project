@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { ErrorContext } from "./ErrorContext";
 
-const EventContext = createContext([]);
+const EventContext = createContext({});
 const EventProvider = ({children}) => {
     const { setErrors } = useContext(ErrorContext);
     const [events, setEvents] = useState([]);

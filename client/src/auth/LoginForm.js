@@ -2,18 +2,18 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { ErrorContext } from "../context/ErrorContext";
 import Errors from "../errors/Errors";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
     const { loginUser, loggedIn } = useContext(UserContext);
     const { setErrors } = useContext(ErrorContext);
-    const navigate = useHistory();
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     useEffect(() => {
         if (loggedIn) {
-            navigate.push("/events")
+            navigate("/events")
         } else {
             return (
                 setErrors([])
@@ -35,7 +35,7 @@ function LoginForm() {
                 setPassword("");
             } else {
                 loginUser(data);
-                navigate.push('/events')
+                navigate('/events')
             }
         })
     }
