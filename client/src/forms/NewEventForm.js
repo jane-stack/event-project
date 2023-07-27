@@ -30,10 +30,10 @@ function NewEventForm () {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(formData)
         })
-        .then(resp => resp.json())
+        .then(resp => resp.json()) // processing body of resp and prepare in json (readability)
         .then(data => {
             if (data.errors) {
-                setErrors(data.errors)
+                setErrors(data.errors) // if it had key of errors
             } else {
                 addEvent(data)
                 setErrors([])
@@ -49,7 +49,7 @@ function NewEventForm () {
             Event Name &nbsp;
             <input className="post-input" type="text" name="name" id="name" value={ formData.name } onChange={ handleChange }/>
             Event Date &nbsp;
-            <input className="post-input" type="text" name="date" id="date" value={ formData.date } onChange={ handleChange }/>
+            <input className="post-input" type="date" name="date" id="date" value={ formData.date } onChange={ handleChange }/>
             Event Location &nbsp;
             <input className="post-input" type="text" name="location" id="location" value={ formData.location } onChange={ handleChange }/>
             <br />

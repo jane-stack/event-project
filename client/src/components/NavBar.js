@@ -19,6 +19,7 @@ function NavBar() {
         return (
             <>
             <div><h4>You are Logged in as {user.name}</h4></div>
+            {/* <Link to="/main" className="nav-link">My Events</Link> */}
             <Link to="/events" className="nav-link">Find Events</Link>
             <Link to="/create" className="nav-link">Create Event</Link>
             <Link to="#" className="nav-link" onClick={logoutButton}>Logout</Link>

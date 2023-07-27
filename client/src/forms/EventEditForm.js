@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import Errors from "../errors/Errors";
 import { ErrorContext } from "../context/ErrorContext";
 import { EventContext } from "../context/EventContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 function EventEditForm () {
     const { setErrors } = useContext(ErrorContext);
@@ -39,9 +39,10 @@ function EventEditForm () {
             } else {
                 editEvent(data)
                 setErrors([])
+                navigate('/events')
             }
         })
-        .then(navigate('/events'))
+
     }
 
     return (
@@ -55,7 +56,8 @@ function EventEditForm () {
             Event Location &nbsp;
             <input className="post-input" type="text" name="location" id="location" value={ formData.location } onChange={ handleChange }/>
             <br />
-            <button type="submit" className="contact-btn">POST</button>
+            <button type="submit">POST</button>
+            <button><Link to="/events">CANCEL</Link></button>
             </div>
             <Errors/>
         </form>

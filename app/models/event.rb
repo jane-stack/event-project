@@ -4,4 +4,8 @@ class Event < ApplicationRecord
     has_many :attendees, through: :attendances, source: :user
 
     validates :name, :date, :location, presence: true
+
+    def self.events_in_month(month)
+        Event.where("EXTRACT(month from date) = ?", month)
+    end
 end

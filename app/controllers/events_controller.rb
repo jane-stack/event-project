@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
     before_action :find_event, only: [:show, :update, :destroy]
-    before_action :authorize, only: [:create]
     before_action :unprocessable_entity_if_not_found, only: [:update, :destroy]
     before_action only: [:update, :destroy] do
         authorize_user_resource(@event.organizer_id)
@@ -17,7 +16,7 @@ class EventsController < ApplicationController
 
     def create
         @event = Event.new(event_params)
-        @event.organizer = current_user
+        @event.organizer = current_user 
         if @event.save
             render json: @event, status: 201
         else
@@ -28,7 +27,11 @@ class EventsController < ApplicationController
     def update
         @event.organizer = current_user
         @event.update(event_params)
-        render json: @event
+        if @event.save
+            render json: @event
+        else
+            render json: {errors: @event.errors.full_messages}, status: :unprocessable_entity
+        end
     end
 
     def destroy

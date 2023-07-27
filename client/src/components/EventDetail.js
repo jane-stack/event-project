@@ -1,49 +1,27 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { EventContext } from "../context/EventContext";
-import { useParams } from "react-router-dom";
 import AttendeeCard from "../cards/AttendeeCard";
-import { ErrorContext } from "../context/ErrorContext";
 
 function EventDetail () {
-    const { setErrors } = useContext(ErrorContext);
     const { user } = useContext(UserContext);
     const { events, deleteEvent } = useContext(EventContext);
+    const [attendances, setAttendances] = useState([]);
     const id = parseInt(useParams().id);
     const event = events.find(event => event.id === id);
-    const [attendances, setAttendances] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`/events/${event.id}/attendances`)
-        .then(resp => resp.json()).then(data => setAttendances(data))
-        .catch(errors => console.log(errors))
+        .then(resp => resp.json())
+        .then(data => setAttendances(data))
     }, [event.id])
 
-    const addAttendee = (newAttendee) => {
-        setAttendances([...attendances, newAttendee]);
-    };
-
-    // button click to attend the event
-    const attendButton = () => {
-        fetch(`/events/${event.id}/attendances`, {
-            method: "POST"
-        })
-        .then(resp => resp.json())
-        .then(() => addAttendee(event.id))
-        .then(() => navigate('/events'))
-        .catch((error) => setErrors(error));
-    };
-
-    // handles deleting an event
-    const onDeleteEvent = () => {
-        fetch(`/events/${event.id}`, {
-            method: "DELETE",
-        })
-        .then(resp => resp.json())
-        .then(deleteEvent(event.id))
-        .then(navigate('/events'))
+    // handles deleting attendances
+    const onDeleteAttendee = (id) => {
+        const updatedStatusList = attendances.filter(attendee => attendee.id !== id)
+        setAttendances(updatedStatusList);
     }
 
     // handle editing attendees Status
@@ -58,10 +36,14 @@ function EventDetail () {
         setAttendances(updatedStatusList);
     }
 
-    // handles deleting attendances
-    const onDeleteAttendee = (id) => {
-        const updatedStatusList = attendances.filter(attendee => attendee.id !== id)
-        setAttendances(updatedStatusList);
+    // handles deleting an event
+    const onDeleteEvent = () => {
+        fetch(`/events/${event.id}`, {
+            method: "DELETE",
+        })
+        .then(resp => resp.json())
+        .then(deleteEvent(event.id))
+        .then(navigate('/events'))
     }
 
     const renderAttendees = attendances.map(attendee => {
@@ -70,7 +52,6 @@ function EventDetail () {
                 key={attendee.id}
                 attendee={attendee}
                 event={event}
-                attendances={attendances}
                 editStatus={editStatus}
                 onDeleteAttendee={onDeleteAttendee}
             />
@@ -89,10 +70,7 @@ function EventDetail () {
                     <button onClick={onDeleteEvent}>Cancel Event</button>
                 </>
             )}
-            <button onClick={attendButton}>Attend This Event</button>
-            <br />
-            <br />
-            <br />
+            <br /><br /><br />
             <h3>People Attending:</h3>
             <table>
                 <thead>

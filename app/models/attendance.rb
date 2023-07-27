@@ -4,5 +4,6 @@ class Attendance < ApplicationRecord
 
   enum status: { attending: 'attending', maybe: 'maybe' }
 
-  validates :status, inclusion: { in: %w[attending maybe], allow_nil: true }
+  validates :status, inclusion: { in: %w[attending maybe] }
+
 end

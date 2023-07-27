@@ -12,5 +12,5 @@ class EventSerializer < ActiveModel::Serializer
     object.attendees.map { |attendee| {id: attendee.id, name: attendee.name} }
   end
 
-  has_many :attendances, serializer: AttendanceSerializer
+  # has_many :attendances, serializer: AttendanceSerializer
 end

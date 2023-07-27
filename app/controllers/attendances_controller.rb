@@ -1,10 +1,15 @@
 class AttendancesController < ApplicationController
-    before_action :set_event
+    before_action :set_event, except: [:attending]
     before_action :find_attendance, only: [:update, :destroy]
-    skip_before_action :authorize, only: [:index]
+    skip_before_action :authorize, only: [:index, :attending]
     before_action :unprocessable_entity_if_not_found, only: [:update, :destroy]
     before_action only: [:update, :destroy] do
         authorize_user_resource(@attendance.user_id)
+    end
+
+    def attending
+        @attendances = Attendance.all
+        render json: @attendances
     end
 
     def index
@@ -13,7 +18,7 @@ class AttendancesController < ApplicationController
     end
 
     def create
-        @attendance = @event.attendances.create(attendance_params)
+        @attendance = @event.attendances.new(attendance_params)
         @attendance.user = current_user
         if @attendance.save
             render json: @attendance, status: 201
@@ -40,7 +45,7 @@ class AttendancesController < ApplicationController
     end
 
     def attendance_params
-        params.permit(:status).merge(status: 'attending')
+        params.permit(:status, :event_id)
     end
 
     def find_attendance
